@@ -1,0 +1,4 @@
+Collection of modules for ZNC made/modified to work with ffIRCd.
+
+ff_nickserv - autoidentify module to identify with ffIRCd's services.
+ff_antiidle - antiidle module fixed to work with ffIRCd.
