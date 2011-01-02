@@ -89,7 +89,7 @@ private:
 			return;
 		}
 
-		AddTimer(new CAntiIdleJob(this, m_uiInterval, 0, "FFAntiIdle", "Periodicamente invia un messaggio all'utente stesso."));
+		AddTimer(new CFFAntiIdleJob(this, m_uiInterval, 0, "FFAntiIdle", "Periodicamente invia un messaggio all'utente stesso."));
 	}
 
 	unsigned int    m_uiInterval;
