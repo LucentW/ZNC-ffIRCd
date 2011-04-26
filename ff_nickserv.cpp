@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2010 Lucent.
- * See the ZNC's AUTHORS file for details. 
+ * Copyright (C) 2011 Lucent.
+ * See the ZNC's AUTHORS file for details on the original module. 
  * This module is based on the original "nickserv" bundled with ZNC.
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -58,27 +58,13 @@ public:
 		}
 	}
 
-	void HandleMessage(CNick& Nick, const CString& sMessage)
+	virtual void OnIRCConnected()
 	{
-		if (!m_sPass.empty()
-				&& Nick.GetNick().Equals("NickServ")
-				&& sMessage.find("identificherai") != CString::npos
-				&& sMessage.find("help") == CString::npos) {
+		if (!m_sPass.empty()) {
 			PutIRC("nickserv IDENTIFY " + m_sPass);
 		}
 	}
 
-	virtual EModRet OnPrivMsg(CNick& Nick, CString& sMessage)
-	{
-		HandleMessage(Nick, sMessage);
-		return CONTINUE;
-	}
-
-	virtual EModRet OnPrivNotice(CNick& Nick, CString& sMessage)
-	{
-		HandleMessage(Nick, sMessage);
-		return CONTINUE;
-	}
 
 private:
 	CString	m_sPass;
