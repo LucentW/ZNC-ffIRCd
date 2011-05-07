@@ -11,6 +11,7 @@
 
 #include "Nick.h"
 #include "User.h"
+#include "Chan.h"
 
 class CFFAntiIdle;
 
@@ -38,6 +39,10 @@ public:
 	{
 		if(!sArgs.Trim_n().empty())
 			SetInterval(sArgs.ToInt());
+		PutIRC("JOIN #devnull.ff");
+		CUser* pUser = GetUser();
+		CChan* pChan = pUser->FindChan("#devnull.ff");
+		pChan->DetachUser();
 		return true;
 	}
 
@@ -58,7 +63,7 @@ public:
 			PutModule("Anti-idle disattivato.");
 		} else if(sCmdName == "show") {
 			if(m_uiInterval == 0)
-				PutModule("L'anti-idle è disattivato.");
+				PutModule("L'anti-idle Ã¨ disattivato.");
 			else
 				PutModule("Anti-idle impostato a " + CString(m_uiInterval) + " secondi.");
 		} else {
@@ -66,7 +71,7 @@ public:
 		}
 	}
 
-	virtual EModRet OnPrivMsg(CNick &Nick, CString &sMessage)
+	virtual EModRet OnChanMsg(CNick& Nick, CChan& Channel, CString& sMessage) 
 	{
 		if(Nick.GetNick() == GetUser()->GetIRCNick().GetNick()
 				&& sMessage == "I-love ffIRCd")
@@ -95,10 +100,8 @@ private:
 	unsigned int    m_uiInterval;
 };
 
-//! This function sends a query with (r) back to the user
 void CFFAntiIdleJob::RunJob() {
-	CString sNick = GetModule()->GetUser()->GetIRCNick().GetNick();
-	GetModule()->PutIRC("PRIVMSG " + sNick + " :I-love ffIRCd");
+	GetModule()->PutIRC("PRIVMSG #devnull.ff :I-love ffIRCd");
 }
 
 MODULEDEFS(CFFAntiIdle, "Nasconde il tuo idle reale.")
