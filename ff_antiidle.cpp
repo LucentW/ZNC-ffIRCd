@@ -77,7 +77,7 @@ public:
 		return CONTINUE;
 	}
 
-	virtual EModRet OnIRCConnected()
+	virtual void OnIRCConnected()
 	{
 		PutIRC("JOIN #devnull.ff");
 		PutUser(":*ff_antiidle!znc@devnull.forumfree.it PRIVMSG #devnull.ff :[INFO] Per il corretto funzionamento del modulo antiidle, è sconsigliato uscire da questo canale.");
