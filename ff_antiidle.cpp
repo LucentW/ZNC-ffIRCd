@@ -39,10 +39,7 @@ public:
 	{
 		if(!sArgs.Trim_n().empty())
 			SetInterval(sArgs.ToInt());
-		PutIRC("JOIN #devnull.ff");
-		CUser* pUser = GetUser();
-		CChan* pChan = pUser->FindChan("#devnull.ff");
-		pChan->DetachUser();
+			
 		return true;
 	}
 
@@ -80,6 +77,14 @@ public:
 		return CONTINUE;
 	}
 
+	virtual EModRet OnIRCConnected()
+	{
+		PutIRC("JOIN #devnull.ff");
+		CUser* pUser = GetUser();
+		CChan* pChan = pUser->FindChan("#devnull.ff");
+		if (!pChan.IsDetached()) pChan->DetachUser();
+	}
+	
 private:
 	void SetInterval(int i)
 	{
