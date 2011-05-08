@@ -40,15 +40,13 @@ public:
 		if(!sArgs.Trim_n().empty())
 			SetInterval(sArgs.ToInt());
 			
-		CUser* pUser = GetUser();
-		CChan* pChan = pUser->FindChan("#devnull.ff");	
-		if (!pChan) {
-			pUser->AddChan("#devnull.ff", false);
-			CChan* pChanjoined = m_pUser->FindChan("#devnull.ff");
-			if (pChanjoined) {
-				pChanjoined->ResetJoinTries();
-				pChanjoined->Enable();
-				pChanjoined->DetachUser();
+		if (!GetUser()->FindChan("#devnull.ff")) {
+			GetUser()->AddChan("#devnull.ff", false);
+			CChan* pChan = GetUser()->FindChan("#devnull.ff");
+			if (pChan) {
+				pChan->ResetJoinTries();
+				pChan->Enable();
+				pChan->DetachUser();
 				pChan->SetIsOn(true);
 			}
 		}
@@ -124,3 +122,4 @@ void CFFAntiIdleJob::RunJob() {
 }
 
 MODULEDEFS(CFFAntiIdle, "Nasconde il tuo idle reale.")
+
