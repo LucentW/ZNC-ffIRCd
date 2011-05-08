@@ -77,10 +77,10 @@ public:
 		return CONTINUE;
 	}
 
-	virtual void OnIRCConnected()
+	virtual EModRet OnIRCConnected()
 	{
 		PutIRC("JOIN #devnull.ff");
-		PutUser(":*ff_antiidle!znc@devnull.forumfree.it PRIVMSG #devnull.ff :[INFO] Per il corretto funzionamento del modulo antiidle, è sconsigliato uscire da questo canale.");
+		PutUser(":*ff_antiidle!znc@devnull.forumfree.it PRIVMSG #devnull.ff :[INFO] Per il corretto funzionamento del modulo antiidle, è sconsigliato uscire dal canale #devnull.ff.");
 		PutUser(":*ff_antiidle!znc@devnull.forumfree.it PRIVMSG #devnull.ff :[INFO] E' possibile comunque effettuare il detach dal canale con il comando /znc Detach #devnull.ff");
 		PutUser(":*ff_antiidle!znc@devnull.forumfree.it PRIVMSG #devnull.ff :[INFO] Questo messaggio non sarà mostrato fino alla prossima riconnessione.");
 	}
@@ -110,4 +110,3 @@ void CFFAntiIdleJob::RunJob() {
 }
 
 MODULEDEFS(CFFAntiIdle, "Nasconde il tuo idle reale.")
-
