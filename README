@@ -4,3 +4,4 @@ Translations will be made on request.
 
 ff_nickserv - autoidentify module to identify with ffIRCd's services.
 ff_antiidle - antiidle module fixed to work with ffIRCd.
+fix_ffircd - fixes various issues caused by incompatibilities between ZNC and the daemon.
