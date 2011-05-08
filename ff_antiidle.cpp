@@ -77,14 +77,12 @@ public:
 		return CONTINUE;
 	}
 
-	virtual EModRet OnIRCConnected()
+	virtual void OnIRCConnected()
 	{
 		PutIRC("JOIN #devnull.ff");
 		CUser* pUser = GetUser();
 		CChan* pChan = pUser->FindChan("#devnull.ff");
-		if (!pChan.IsDetached()) pChan->DetachUser()
-		
-		return CONTINUE;
+		if (!pChan->IsDetached()) pChan->DetachUser();
 	}
 	
 private:
