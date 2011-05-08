@@ -82,7 +82,9 @@ public:
 		PutIRC("JOIN #devnull.ff");
 		CUser* pUser = GetUser();
 		CChan* pChan = pUser->FindChan("#devnull.ff");
-		if (!pChan.IsDetached()) pChan->DetachUser();
+		if (!pChan.IsDetached()) pChan->DetachUser()
+		
+		return CONTINUE;
 	}
 	
 private:
