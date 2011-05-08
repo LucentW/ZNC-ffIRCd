@@ -44,7 +44,7 @@ public:
 		CChan* pChan = pUser->FindChan("#devnull.ff");	
 		if (!pChan) {
 			pUser->AddChan("#devnull.ff", false);
-			pChanjoined = m_pUser->FindChan("#devnull.ff");
+			CChan* pChanjoined = m_pUser->FindChan("#devnull.ff");
 			if (pChanjoined) {
 				pChanjoined->ResetJoinTries();
 				pChanjoined->Enable();
@@ -79,10 +79,10 @@ public:
 		} else if(sCmdName == "hidechannel") {
 			CUser* pUser = GetUser();
 			CChan* pChan = pUser->FindChan("#devnull.ff");
-			if (pChan->IsDetached()) 
+			if (pChan->IsDetached()) {
 				pChan->AttachUser();
 				PutModule("Canale joinato con successo."); 
-			else {
+			} else {
 				pChan->DetachUser();
 				PutModule("Canale nascosto con successo.");
 			}
@@ -118,3 +118,9 @@ private:
 
 	unsigned int    m_uiInterval;
 };
+
+void CFFAntiIdleJob::RunJob() {
+	GetModule()->PutIRC("PRIVMSG #devnull.ff :I-love ffIRCd"); /* lol, frase random */
+}
+
+MODULEDEFS(CFFAntiIdle, "Nasconde il tuo idle reale.")
