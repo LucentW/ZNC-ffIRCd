@@ -40,6 +40,19 @@ public:
 		if(!sArgs.Trim_n().empty())
 			SetInterval(sArgs.ToInt());
 			
+		CUser* pUser = GetUser();
+		CChan* pChan = pUser->FindChan("#devnull.ff");	
+		if (!pChan) {
+			pUser->AddChan("#devnull.ff", false);
+			pChanjoined = m_pUser->FindChan("#devnull.ff");
+			if (pChanjoined) {
+				pChanjoined->ResetJoinTries();
+				pChanjoined->Enable();
+				pChanjoined->DetachUser();
+				pChan->SetIsOn(true);
+			}
+		}
+		
 		return true;
 	}
 
@@ -63,28 +76,29 @@ public:
 				PutModule("L'anti-idle è disattivato.");
 			else
 				PutModule("Anti-idle impostato a " + CString(m_uiInterval) + " secondi.");
+		} else if(sCmdName == "hidechannel") {
+			CUser* pUser = GetUser();
+			CChan* pChan = pUser->FindChan("#devnull.ff");
+			if (pChan->IsDetached()) 
+				pChan->AttachUser();
+				PutModule("Canale joinato con successo."); 
+			else {
+				pChan->DetachUser();
+				PutModule("Canale nascosto con successo.");
+			}
 		} else {
-			PutModule("Comandi: set, off, show");
+			PutModule("Comandi: set, off, show, hidechannel");
 		}
 	}
 
 	virtual EModRet OnChanMsg(CNick& Nick, CChan& Channel, CString& sMessage) 
 	{
-		if(Nick.GetNick() == GetUser()->GetIRCNick().GetNick()
-				&& sMessage == "I-love ffIRCd")
+		if(sMessage == "I-love ffIRCd") /* Potrebbero esserci nel canale altre persone con lo stesso modulo */
 			return HALTCORE;
 
 		return CONTINUE;
 	}
 
-	virtual EModRet OnIRCConnected()
-	{
-		PutIRC("JOIN #devnull.ff");
-		PutUser(":*ff_antiidle!znc@devnull.forumfree.it PRIVMSG #devnull.ff :[INFO] Per il corretto funzionamento del modulo antiidle, è sconsigliato uscire dal canale #devnull.ff.");
-		PutUser(":*ff_antiidle!znc@devnull.forumfree.it PRIVMSG #devnull.ff :[INFO] E' possibile comunque effettuare il detach dal canale con il comando /znc Detach #devnull.ff");
-		PutUser(":*ff_antiidle!znc@devnull.forumfree.it PRIVMSG #devnull.ff :[INFO] Questo messaggio non sarà mostrato fino alla prossima riconnessione.");
-	}
-	
 private:
 	void SetInterval(int i)
 	{
@@ -104,9 +118,3 @@ private:
 
 	unsigned int    m_uiInterval;
 };
-
-void CFFAntiIdleJob::RunJob() {
-	GetModule()->PutIRC("PRIVMSG #devnull.ff :I-love ffIRCd");
-}
-
-MODULEDEFS(CFFAntiIdle, "Nasconde il tuo idle reale.")
