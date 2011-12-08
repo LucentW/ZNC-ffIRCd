@@ -9,9 +9,9 @@
  * by the Free Software Foundation.
  */
 
-#include "Nick.h"
-#include "User.h"
-#include "Chan.h"
+#include <znc/Nick.h>
+#include <znc/IRCNetwork.h>
+#include <znc/Chan.h>
 
 class CFFAntiIdle;
 
@@ -39,10 +39,11 @@ public:
 	{
 		if(!sArgs.Trim_n().empty())
 			SetInterval(sArgs.ToInt());
-			
-		if (!GetUser()->FindChan("#devnull.ff")) {
+		
+		CChan* pChan = GetUser()->FindChan("#devnull.ff");
+		if (!pChan) {
 			GetUser()->AddChan("#devnull.ff", false);
-			CChan* pChan = GetUser()->FindChan("#devnull.ff");
+			pChan = GetUser()->FindChan("#devnull.ff");	
 			if (pChan) {
 				pChan->ResetJoinTries();
 				pChan->Enable();
@@ -87,6 +88,18 @@ public:
 		} else {
 			PutModule("Comandi: set, off, show, hidechannel");
 		}
+	}
+	
+	virtual EModRet OnRaw(CString &sLine) {
+		/* Se ci autoinviamo un messaggio mentre siamo away, questo
+		 * causerà una risposta 301 dal server, che non va rimbalzata
+		 * al client. */
+
+		if (sLine.Token(1).Equals("301") && sLine.Token(3).Equals(m_pNetwork->GetIRCNick().GetNick())) {
+			return HALT;
+		}
+
+		return CONTINUE;
 	}
 
 	virtual EModRet OnChanMsg(CNick& Nick, CChan& Channel, CString& sMessage) 
