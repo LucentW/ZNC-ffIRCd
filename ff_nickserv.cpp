@@ -8,66 +8,65 @@
  * by the Free Software Foundation.
  */
 
-#include "User.h"
+#include <znc/Modules.h>
+#include <znc/User.h>
 
 class CFFNickServ : public CModule
 {
 public:
 	MODCONSTRUCTOR(CFFNickServ)
 	{
+		AddHelpCommand();
+		AddCommand("set", static_cast<CModCommand::ModCmdFunc>(&CFFNickServ::SetCommand),
+			"password", "Imposta la password per l'autoidentify");
+		AddCommand("clear", static_cast<CModCommand::ModCmdFunc>(&CFFNickServ::ClearCommand),
+			"", "Rimuove la password dalle configurazioni interne");
+		AddCommand("clear", static_cast<CModCommand::ModCmdFunc>(&CFFNickServ::CreditsCommand),
+			"", "Mostra i crediti agli sviluppatori e ringraziamenti vari");
 	}
 
-	virtual ~CFFNickServ()
-	{
+	virtual ~CFFNickServ() {}
+	
+	void SetCommand(const CString& sLine) {
+		SetNV("Password", sLine.Token(1, true));
+		PutModule("Password impostata.");
 	}
 
+	void ClearCommand(const CString& sLine) {
+		DelNV("Password");
+		PutModule("Password rimossa.");
+	}
+	
+	void CreditsCommand(const CString& sLine) {
+		PutModule("ff_nickserv -- 2011 Lucent");
+		PutModule("Basato sul modulo nickserv contenuto nel pacchetto dei moduli ZNC");
+		PutModule("---------------------------------------------------------------------------");
+		PutModule("Ringraziamenti:");
+		PutModule("  Bowser - il committente");
+		PutModule("   Hannibal_Smith - la mente del progetto Forumfree IRCd");
+		PutModule("    Niccolo` e la bella gente che ha sviluppato l'IRCd");
+		PutModule("     I moderatori/staffer/FFmod su #chat.ff"); 
+		PutModule("      Altra bella gente da #ffmagazine.ff");
+		PutModule("       ... e tu che stai usando questo modulo :E");
+	}
+	
 	virtual bool OnLoad(const CString& sArgs, CString& sMessage)
 	{
-		if (sArgs.empty())
-			m_sPass = GetNV("Password");
-		else
-			m_sPass = sArgs;
+		if (!sArgs.empty()) {
+			SetNV("Password", sArgs);
+			SetArgs("");
+		}
 
 		return true;
 	}
 
-	virtual void OnModCommand(const CString& sCommand)
-	{
-		CString sCmdName = sCommand.Token(0).AsLower();
-		if (sCmdName == "set") {
-			CString sPass = sCommand.Token(1, true);
-			m_sPass = sPass;
-			SetNV("Password", m_sPass);
-			PutModule("Impostato l'autoidentify");
-		} else if (sCmdName == "clear") {
-			m_sPass = "";
-			DelNV("Password");
-		} else if (sCmdName == "credits" ) {
-			PutModule("ff_nickserv -- 2010 Lucent");
-			PutModule("Basato sul modulo nickserv contenuto nel pacchetto dei moduli ZNC");
-			PutModule("---------------------------------------------------------------------------");
-			PutModule("Ringraziamenti:");
-			PutModule("  Bowser - il committente");
-			PutModule("   Hannibal_Smith - la mente del progetto Forumfree IRCd");
-			PutModule("    Niccolo` e la bella gente che ha sviluppato l'IRCd");
-			PutModule("     I moderatori/staffer/FFmod su #chat.ff"); 
-			PutModule("      Altra bella gente da #ffmagazine.ff");
-			PutModule("       ... e tu che stai usando questo modulo :E");
-		} else {
-			PutModule("Comandi: set <password>, clear, credits");
-		}
-	}
-
 	virtual void OnIRCConnected()
 	{
-		if (!m_sPass.empty()) {
-			PutIRC("nickserv IDENTIFY " + m_sPass);
+		if (GetNV("Password")) {
+			PutIRC("nickserv IDENTIFY " + GetNV("Password"));
 		}
 	}
 
-
-private:
-	CString	m_sPass;
 };
 
-MODULEDEFS(CFFNickServ, "Ti autentica ai servizi dell'IRCd di Forumfree")
+NETWORKMODULEDEFS(CFFNickServ, "Ti autentica ai servizi dell'IRCd di Forumfree")
