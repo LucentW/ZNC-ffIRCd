@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Lucent.
+ * Copyright (C) 2012 Lucent.
  * See the ZNC's AUTHORS file for details on the original module. 
  * This module is based on the original "nickserv" bundled with ZNC.
  *
@@ -21,7 +21,7 @@ public:
 			"password", "Imposta la password per l'autoidentify");
 		AddCommand("clear", static_cast<CModCommand::ModCmdFunc>(&CFFNickServ::ClearCommand),
 			"", "Rimuove la password dalle configurazioni interne");
-		AddCommand("clear", static_cast<CModCommand::ModCmdFunc>(&CFFNickServ::CreditsCommand),
+		AddCommand("credits", static_cast<CModCommand::ModCmdFunc>(&CFFNickServ::CreditsCommand),
 			"", "Mostra i crediti agli sviluppatori e ringraziamenti vari");
 	}
 
@@ -38,7 +38,7 @@ public:
 	}
 	
 	void CreditsCommand(const CString& sLine) {
-		PutModule("ff_nickserv -- 2011 Lucent");
+		PutModule("ff_nickserv -- 2012 Lucent");
 		PutModule("Basato sul modulo nickserv contenuto nel pacchetto dei moduli ZNC");
 		PutModule("---------------------------------------------------------------------------");
 		PutModule("Ringraziamenti:");
