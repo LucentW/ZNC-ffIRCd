@@ -1,0 +1,91 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
+  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>ZNC-ffIRCd</title>
+  <meta name="description" content="Modules for ZNC patched to be compatible with Forumfree&#39;s IRC server.">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">ZNC-ffIRCd</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">Modules for ZNC patched to be compatible with Forumfree&#39;s IRC server.</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/LucentW/ZNC-ffIRCd/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/LucentW/ZNC-ffIRCd/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/LucentW/ZNC-ffIRCd" class="code">View ZNC-ffIRCd on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h3>
+<a name="what-is-this" class="anchor" href="#what-is-this"><span class="octicon octicon-link"></span></a>What is this?</h3>
+
+<p>Collection of modules for ZNC made/modified to work with ffIRCd.
+Modules are strictly in Italian, honoring the network's language.
+Translations will be made on request.</p>
+
+<ul>
+<li>
+<strong>ff_nickserv</strong> - autoidentify module to identify with ffIRCd's services.</li>
+<li>
+<strong>ff_antiidle</strong> - antiidle module fixed to work with ffIRCd.</li>
+<li>
+<strong>fix_ffircd</strong> - fixes various issues caused by incompatibilities between ZNC and the daemon.</li>
+</ul><h3>
+<a name="come-installare-i-moduli-per-ffircd-solo-sistemi-nix-no-windows" class="anchor" href="#come-installare-i-moduli-per-ffircd-solo-sistemi-nix-no-windows"><span class="octicon octicon-link"></span></a>Come installare i moduli per ffIRCd? (solo sistemi *NIX, no Windows)</h3>
+
+<ul>
+<li>Scaricare i sorgenti</li>
+<li>Caricarli sul server destinazione</li>
+<li>Dalla shell dare <strong>znc-buildmod *.cpp</strong>
+</li>
+<li>Dalla shell dare <strong>cp *.so ~/.znc/modules/</strong>
+</li>
+<li>Attivare i moduli sull'utente collegato ad ffIRCd con il comando <strong>/znc LoadMod nomemodulo</strong>
+(dove nomemodulo è <strong>ff_antiidle</strong> o <strong>ff_nickserv</strong> o <strong>fix_ffircd</strong>)</li>
+<li>Leggere attentamente l'help con <strong>/msg *nomemodulo Help</strong>
+</li>
+<li>Configurare a piacimento seguendo la sintassi dell'help.</li>
+</ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      <p><a href="https://github.com/LucentW" class="avatar"><img src="https://avatars3.githubusercontent.com/u/335570?s=60" width="48" height="48"/></a> <a href="https://github.com/LucentW">LucentW</a> maintains <a href="https://github.com/LucentW/ZNC-ffIRCd">ZNC-ffIRCd</a></p>
+
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="http://pages.github.com/">GitHub Pages</a><br/>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/LucentW/ZNC-ffIRCd/tarball/master" class="tar">tar</a><a href="https://github.com/LucentW/ZNC-ffIRCd/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+
+  
+</body>
+</html>
