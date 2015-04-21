@@ -1,3 +1,7 @@
+# ZNC-ffIRCd
+
+[![Build Status](https://travis-ci.org/LucentW/ZNC-ffIRCd.svg)](https://travis-ci.org/LucentW/ZNC-ffIRCd)
+
 Collection of modules for ZNC made/modified to work with ffIRCd.
 Modules are strictly in Italian, honoring the network's language.
 Translations will be made on request.
