@@ -1,0 +1,11 @@
+language: cpp
+compiler: gcc
+
+before_script:
+  - sudo apt-get update -q
+  - sudo apt-get install -y znc znc-dev
+  
+script:
+  - znc-buildmod ff_antiidle.cpp
+  - znc-buildmod ff_nickserv.cpp
+  - znc-buildmod fix_ffircd.cpp
