@@ -10,7 +10,7 @@
  */
 
 #include <znc/Nick.h>
-#include <znc/IRCNetwork.h>
+#include <znc/User.h>
 #include <znc/Chan.h>
 
 class CFFAntiIdle;
