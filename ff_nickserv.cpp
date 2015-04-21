@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Lucent.
+ * Copyright (C) 2015 Lucent.
  * See the ZNC's AUTHORS file for details on the original module. 
  * This module is based on the original "nickserv" bundled with ZNC.
  *
@@ -62,7 +62,7 @@ public:
 
 	virtual void OnIRCConnected()
 	{
-		if (GetNV("Password")) {
+		if (!GetNV("Password").empty()) {
 			PutIRC("nickserv IDENTIFY " + GetNV("Password"));
 		}
 	}
